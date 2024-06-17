@@ -509,25 +509,25 @@ function gameOver() {
     updateStats();
 }
 
-function startGame() {
-    gameLog.innerHTML = "";
+ function startGame() {
+            gameLog.innerHTML = "";
+            let playerName = prompt("Enter your character's name:");
+            if (!playerName) {
+                playerName = "Hero";
+            }
+            player.name = playerName;
 
-    // Check if player.name is not already set
-    if (!player.name) {
-        let playerName = prompt("Enter your character's name:");
-        player.name = playerName ? playerName : "Hero"; // Set to "Hero" if no name is provided
-    }
+            player.hp = 100;
+            player.experience = 0;
+            player.level = 1;
+            player.attack = 15;
+            player.defense = 10;
+            player.gold = 500;
+            updateStats();
+            logMessage(`Welcome, ${player.name}! Explore and fight enemies.`);
+            generateEnemy();
+        }
 
-    player.hp = 100;
-    player.experience = 0;
-    player.level = 1;
-    player.attack = 15;
-    player.defense = 10;
-    player.gold = 500;
-    updateStats();
-    logMessage(`Welcome, ${player.name}! Explore and fight enemies.`);
-    generateEnemy();
-}
 
 
 // Event listeners for buttons
