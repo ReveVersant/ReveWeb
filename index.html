@@ -511,11 +511,14 @@ function gameOver() {
 
 function startGame() {
     gameLog.innerHTML = "";
-    let playerName = prompt("Enter your character's name:");
-    if (!playerName) {
-        playerName = "Hero";
+    if (!player.name) {
+        let playerName = prompt("Enter your character's name:");
+        if (!playerName) {
+            player.name = "Hero";
+        } else {
+            player.name = playerName;
+        }
     }
-    player.name = playerName;
 
     player.hp = 100;
     player.experience = 0;
