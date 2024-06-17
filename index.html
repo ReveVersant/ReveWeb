@@ -511,13 +511,11 @@ function gameOver() {
 
 function startGame() {
     gameLog.innerHTML = "";
+
+    // Check if player.name is not already set
     if (!player.name) {
         let playerName = prompt("Enter your character's name:");
-        if (!playerName) {
-            player.name = "Hero";
-        } else {
-            player.name = playerName;
-        }
+        player.name = playerName ? playerName : "Hero"; // Set to "Hero" if no name is provided
     }
 
     player.hp = 100;
@@ -530,6 +528,7 @@ function startGame() {
     logMessage(`Welcome, ${player.name}! Explore and fight enemies.`);
     generateEnemy();
 }
+
 
 // Event listeners for buttons
 document.querySelector('.start-game-button').addEventListener('click', startGame);
