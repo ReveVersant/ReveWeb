@@ -60,27 +60,56 @@
             margin-bottom: 20px;
         }
 
-         .game-log {
-        height: 200px;
-        overflow-y: auto;
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-        width: 100%;
-        transition: opacity 0.5s ease;
-    }
+     /* Existing game-log styles */
+.game-log {
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    transition: opacity 0.5s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-    .game-log .old-entry {
-        opacity: 0.6;
-        transition: opacity 1s ease-out;
-    }
+.game-log .old-entry {
+    opacity: 0.6;
+    transition: opacity 1s ease-out;
+}
 
-    .game-log .new-entry {
-        opacity: 1;
-        transition: opacity 0.5s ease-in;
-    }
+.game-log .new-entry {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+/* Adding more aesthetic appeal */
+.game-log p {
+    background-color: rgba(255, 215, 0, 0.1);
+    border-left: 4px solid #FFD700;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+.game-log p.new-entry {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Additional styles for log aesthetics */
+.game-log {
+    transition: background-color 0.5s ease-in-out;
+    background-color: #1e1e1e;
+}
 
         .buttons button, .restart-btn {
             margin: 10px;
@@ -468,10 +497,11 @@
             }
         }
 
-      function logMessage(message) {
+  function logMessage(message) {
     const logEntry = document.createElement('p');
-    logEntry.innerHTML = message;
+    logEntry.innerHTML = `<span style="color: #FFD700; font-weight: bold;">${message}</span>`;
     logEntry.classList.add('new-entry');
+    logEntry.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
     gameLog.appendChild(logEntry);
 
     // Keep only the latest 10 messages
@@ -480,6 +510,14 @@
         firstChild.classList.add('old-entry');
         gameLog.removeChild(firstChild);
     }
+
+    gameLog.scrollTop = gameLog.scrollHeight;
+}
+
+// Enhance the background of the log console
+document.getElementById('game-log').style.transition = 'background-color 0.5s ease-in-out';
+document.getElementById('game-log').style.backgroundColor = '#1e1e1e';
+
 
     gameLog.scrollTop = gameLog.scrollHeight;
 }
