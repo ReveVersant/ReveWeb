@@ -5,56 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reve's Web</title>
     <style>
-        /* Basic Reset */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-color: #740000;
-        }
+/* Basic Reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #740000;
+}
 
-        header {
-            background-color: #000000;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            width: 100%;
-        }
+header {
+    background-color: #000000;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+}
 
-        header img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
+header img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
 
-        main {
-            flex: 1;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 1rem;
-            text-align: center;
-        }
+main {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+}
 
-        .left, .right {
-            flex: 1 1 100%;
-            padding: 20px;
-            background-color: #CCC;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            margin: 10px;
-            max-width: 500px;
-        }
+.left, .right {
+    flex: 1;
+    padding: 10px;
+    background-color: #CCC;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    margin: 10px;
+    max-width: 500px;
+}
 
-        .right {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 /* General styling for game info */
 .game-info {
@@ -115,7 +115,6 @@
     background-color: #f1e1f5;
 }
 
-
 .controls {
     display: flex;
     justify-content: center;
@@ -153,38 +152,27 @@
     background-color: #e53935;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+    header, .left, .right {
+        padding: 10px;
+    }
 
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            width: 100%;
-            position: relative;
-            bottom: 0;
-        }
+    .game-log {
+        height: 150px;
+    }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header, .left, .right {
-                padding: 10px;
-            }
+    .buttons button {
+        width: 100%;
+        margin: 5px 0;
+    }
 
-            .game-log {
-                height: 150px;
-            }
+    .left, .right {
+        flex: 1 1 100%;
+    }
+}
 
-            .buttons button {
-                width: 100%;
-                margin: 5px 0;
-            }
-
-            .left, .right {
-                flex: 1 1 100%;
-            }
-        }
-
-      .title-effect {
+.title-effect {
     font-size: 24px;
     color: #fff;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -203,6 +191,7 @@
     50% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
     100% { text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); }
 }
+
     </style>
 </head>
 <body>
