@@ -254,16 +254,20 @@ function generateEnemy() {
     let isBoss = Math.random() < 0.1; // 10% chance for a boss enemy
     let name = isBoss ? bossNames[Math.floor(Math.random() * bossNames.length)] : enemyNames[Math.floor(Math.random() * enemyNames.length)];
 
+    // Random factor for variability
+    const statVariance = 1 + (Math.random() * 0.5); // 0.5 is the max variance factor
+
     enemy = {
         name: name,
         level: level,
-        hp: 50 + level * 10 + (isBoss ? 100 : 0),  // Bosses have more HP
-        attack: 5 + level * 2 + (isBoss ? 10 : 0),  // Bosses have more attack
-        defense: 2 + level + (isBoss ? 5 : 0)      // Bosses have more defense
+        hp: Math.floor((50 + level * 10 + (isBoss ? 100 : 0)) * statVariance),  // Bosses have more HP with variance
+        attack: Math.floor((5 + level * 2 + (isBoss ? 10 : 0)) * statVariance),  // Bosses have more attack with variance
+        defense: Math.floor((2 + level + (isBoss ? 5 : 0)) * statVariance)      // Bosses have more defense with variance
     };
     logMessage(`A wild ${enemy.name} appeared! You can Punch, Kick or Slap the enemy!`);
     updateEnemyStats();
 }
+
 
 function calculateDamage(baseDamage, defense, isCritical) {
     let damage = Math.max(0, baseDamage - defense);
@@ -364,13 +368,13 @@ function buyItem(item) {
 }
 
 function updateStats() {
-    document.getElementById('player-stats').innerText = `Player - Name: ${player.name}, Level: ${player.level}, HP: ${player.hp}, Attack: ${player.attack}, Defense: ${player.defense}, Gold: ${player.gold}`;
+    document.getElementById('player-stats').innerText = `Name: ${player.name}, Level: ${player.level}, HP: ${player.hp}, Attack: ${player.attack}, Defense: ${player.defense}, Gold: ${player.gold}`;
 }
 
 
 function updateEnemyStats() {
     if (enemy) {
-        document.getElementById('enemy-stats').innerText = `Enemy - Name: ${enemy.name}, Level: ${enemy.level}, HP: ${enemy.hp.toFixed(1)}, Attack: ${enemy.attack}, Defense: ${enemy.defense}`;
+        document.getElementById('enemy-stats').innerText = `Enemy: ${enemy.name}, Level: ${enemy.level}, HP: ${enemy.hp.toFixed(1)}, Attack: ${enemy.attack}, Defense: ${enemy.defense}`;
     }
 }
 
