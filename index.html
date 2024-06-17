@@ -364,8 +364,9 @@ function buyItem(item) {
 }
 
 function updateStats() {
-    document.getElementById('player-stats').innerText = `Player - Level: ${player.level}, HP: ${player.hp}, Attack: ${player.attack}, Defense: ${player.defense}, Gold: ${player.gold}`;
+    document.getElementById('player-stats').innerText = `Player - Name: ${player.name}, Level: ${player.level}, HP: ${player.hp}, Attack: ${player.attack}, Defense: ${player.defense}, Gold: ${player.gold}`;
 }
+
 
 function updateEnemyStats() {
     if (enemy) {
