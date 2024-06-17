@@ -16,16 +16,16 @@
         header {
             background-color: #000000;
             color: white;
-            padding: 1rem;
+            padding: 0.5rem;
             text-align: center;
-            width: 100%;
+            width: 50%;
         }
         main {
             display: flex;
             flex: 1;
             justify-content: space-around;
             align-items: center;
-            padding: 2rem;
+            padding: 4rem;
             text-align: center;
         }
         .left, .right {
@@ -235,7 +235,7 @@
             player.defense = 5;
             player.gold = 50;
             updateStats();
-            logMessage("Game started! Explore and fight enemies.");
+            logMessage("Game started! Explore and fight enemies. You can Walk, Shop or Quit.");
             generateEnemy();
         }
 
@@ -248,7 +248,7 @@
                 attack: 5 + level * 2,
                 defense: 2 + level
             };
-            logMessage(`A wild ${enemy.name} appeared!`);
+            logMessage(`A wild ${enemy.name} appeared!  You can Punch, Kick or Slap the enemy!`);
             updateEnemyStats();
         }
 
