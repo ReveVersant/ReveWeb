@@ -86,20 +86,21 @@
             <div class="result" id="snakeResult"></div>
             <button class="restart-btn" id="restartBtn" onclick="restartGame()">Restart Game</button>
         </div>
-        <div class="right">
-            <h2>Text-Based Battle Game</h2>
-            <div class="game-info">
-                <p id="player-stats"></p>
-                <p id="enemy-stats"></p>
-            </div>
-            <div class="game-log" id="game-log"></div>
-            <div class="input-field">
-                <input type="text" id="player-input" placeholder="Type your action...">
-                <button class="buttons" onclick="handleAction()">Submit</button>
-            </div>
-            <button class="buttons" onclick="startGame()">Start Game</button>
-            <button class="buttons" onclick="shop()">Visit Shop</button>
-        </div>
+       <div class="right">
+    <h2>Text-Based Battle Game</h2>
+    <div class="game-info">
+        <p id="player-stats"></p>
+        <p id="enemy-stats"></p>
+    </div>
+    <div class="game-log" id="game-log"></div>
+    <div class="buttons">
+        <button class="buttons" onclick="attackEnemy('punch')">Punch</button>
+        <button class="buttons" onclick="attackEnemy('kick')">Kick</button>
+        <button class="buttons" onclick="attackEnemy('slap')">Slap</button>
+    </div>
+    <button class="buttons" onclick="startGame()">Start Game</button>
+    <button class="buttons" onclick="shop()">Visit Shop</button>
+</div>
     </main>
     <footer>
         <p>&copy; 2024 Reve</p>
@@ -235,7 +236,7 @@
             player.defense = 5;
             player.gold = 50;
             updateStats();
-            logMessage("Game started! Explore and fight enemies. You can Walk, Shop or Quit.");
+            logMessage("Game started! Explore and fight enemies.");
             generateEnemy();
         }
 
@@ -252,36 +253,37 @@
             updateEnemyStats();
         }
 
-        function attackEnemy(attackType) {
-            let damage = 0;
-            if (attackType === 'punch') {
-                damage = Math.floor(Math.random() * player.attack) + 5;
-            } else if (attackType === 'kick') {
-                damage = Math.floor(Math.random() * (player.attack + 5)) + 7;
-            } else if (attackType === 'slap') {
-                damage = Math.floor(Math.random() * (player.attack - 2)) + 3;
-            }
+function attackEnemy(attackType) {
+    let damage = 0;
+    if (attackType === 'punch') {
+        damage = Math.floor(Math.random() * player.attack) + 5;
+    } else if (attackType === 'kick') {
+        damage = Math.floor(Math.random() * (player.attack + 5)) + 7;
+    } else if (attackType === 'slap') {
+        damage = Math.floor(Math.random() * (player.attack - 2)) + 3;
+    }
 
-            let effectiveDamage = Math.max(0, damage - enemy.defense);
-            enemy.hp -= effectiveDamage;
-            logMessage(`${player.name} ${attackType}s ${enemy.name} for ${effectiveDamage} damage!`);
-            if (enemy.hp <= 0) {
-                winBattle();
-                return;
-            }
-            enemyAttack();
-        }
+    let effectiveDamage = Math.max(0, damage - enemy.defense);
+    enemy.hp -= effectiveDamage;
+    logMessage(`${player.name} ${attackType}s ${enemy.name} for ${effectiveDamage} damage!`);
+    if (enemy.hp <= 0) {
+        winBattle();
+        return;
+    }
+    enemyAttack();
+}
 
-        function enemyAttack() {let damage = Math.floor(Math.random() * enemy.attack) + 2;
-            let effectiveDamage = Math.max(0, damage - player.defense);
-            player.hp -= effectiveDamage;
-            logMessage(`${enemy.name} attacks ${player.name} for ${effectiveDamage} damage!`);
-            if (player.hp <= 0) {
-                gameOver();
-            } else {
-                updateStats();
-            }
-        }
+function enemyAttack() {
+    let damage = Math.floor(Math.random() * enemy.attack) + 2;
+    let effectiveDamage = Math.max(0, damage - player.defense);
+    player.hp -= effectiveDamage;
+    logMessage(`${enemy.name} attacks ${player.name} for ${effectiveDamage} damage!`);
+    if (player.hp <= 0) {
+        gameOver();
+    } else {
+        updateStats();
+    }
+}
 
         function winBattle() {
             logMessage(`${enemy.name} is defeated!`);
