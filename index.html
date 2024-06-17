@@ -330,14 +330,14 @@ function winBattle() {
 function levelUp() {
     player.level++;
     player.hp += 20;
-    player.attack += 5;
-    player.defense += 2;
+    player.attack += 1;
+    player.defense += 0.25;
     player.experience = 0;
     logMessage(`${player.name} leveled up! Level: ${player.level}, HP: ${player.hp}, Attack: ${player.attack}, Defense: ${player.defense}`);
 }
 
 function shop() {
-    let choice = prompt("Welcome to the shop!\n1. Heal (10 gold)\n2. Attack Upgrade (20 gold)\n3. Defense Upgrade (20 gold)\n4. Exit Shop\nChoose an option:");
+    let choice = prompt("Welcome to the shop!\n1. Heal (50 gold)\n2. Attack Upgrade (100 gold)\n3. Defense Upgrade (100 gold)\n4. Exit Shop\nChoose an option:");
     switch(choice) {
         case '1':
             buyItem('heal');
@@ -355,14 +355,14 @@ function shop() {
 
 function buyItem(item) {
     if (item === 'heal' && player.gold >= 10) {
-        player.hp += 30;
-        player.gold -= 10;
+        player.hp += 100;
+        player.gold -= 50;
         logMessage(`${player.name} buys a heal. HP: ${player.hp}`);
-    } else if (item === 'attack_up' && player.gold >= 20) {
+    } else if (item === 'attack_up' && player.gold >= 100) {
         player.attack += 5;
         player.gold -= 20;
         logMessage(`${player.name} buys an attack upgrade. Attack: ${player.attack}`);
-    } else if (item === 'defense_up' && player.gold >= 20) {
+    } else if (item === 'defense_up' && player.gold >= 100) {
         player.defense += 5;
         player.gold -= 20;
         logMessage(`${player.name} buys a defense upgrade. Defense: ${player.defense}`);
