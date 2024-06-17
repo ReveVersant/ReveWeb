@@ -370,20 +370,29 @@ function calculateDamage(baseDamage, defense, isCritical) {
 
 function attackEnemy(attackType) {
     let baseDamage = 0;
+    let rolledDamage = 0;
+    let damageText = '';
+    
     if (attackType === 'punch') {
-        baseDamage = Math.floor(Math.random() * player.attack) + 5;
+        rolledDamage = Math.floor(Math.random() * player.attack) + 5;
+        baseDamage = rolledDamage;
     } else if (attackType === 'kick') {
-        baseDamage = Math.floor(Math.random() * (player.attack + 5)) + 7;
+        rolledDamage = Math.floor(Math.random() * (player.attack + 5)) + 7;
+        baseDamage = rolledDamage;
     } else if (attackType === 'slap') {
-        baseDamage = Math.floor(Math.random() * (player.attack - 2)) + 3;
+        rolledDamage = Math.floor(Math.random() * (player.attack - 2)) + 3;
+        baseDamage = rolledDamage;
     }
 
     let isCritical = Math.random() < 0.2;
     let effectiveDamage = calculateDamage(baseDamage, enemy.defense, isCritical);
-    enemy.hp -= effectiveDamage;
-    let damageText = `*${player.name} ${attackType}s ${enemy.name} for ${effectiveDamage.toFixed(1)} damage${isCritical ? ' with a critical hit!' : ''}*`;
+    
+    // Detailed log message
+    let criticalText = isCritical ? ' (Crit!)' : '';
+    damageText = `${attackType.charAt(0).toUpperCase() + attackType.slice(1)} (Rolled ${rolledDamage} + ${baseDamage - rolledDamage}) - Defence (${enemy.defense}) = ${effectiveDamage.toFixed(1)}${criticalText}`;
 
-    logMessage(`${player.name} ${attackType}s ${enemy.name} for ${effectiveDamage.toFixed(1)} damage${isCritical ? ' with a critical hit!' : ''}`, damageText);
+    enemy.hp -= effectiveDamage;
+    logMessage(`${player.name} ${attackType}s ${enemy.name} for ${effectiveDamage.toFixed(1)} damage${criticalText}`, damageText);
 
     updateEnemyStats();
 
@@ -394,20 +403,26 @@ function attackEnemy(attackType) {
     enemyAttack();
 }
 
+
 function enemyAttack() {
     let baseDamage = Math.floor(Math.random() * enemy.attack) + 2;
     let isCritical = Math.random() < 0.2;
     let effectiveDamage = calculateDamage(baseDamage, player.defense, isCritical);
-    player.hp -= effectiveDamage;
-    let damageText = `*${enemy.name} attacks ${player.name} for ${effectiveDamage.toFixed(1)} damage${isCritical ? ' with a critical hit!' : ''}*`;
+    
+    // Detailed log message
+    let criticalText = isCritical ? ' (Crit!)' : '';
+    let damageText = `Enemy Attack (Rolled ${baseDamage}) - Defence (${player.defense}) = ${effectiveDamage.toFixed(1)}${criticalText}`;
 
-    logMessage(`${enemy.name} attacks ${player.name} for ${effectiveDamage.toFixed(1)} damage${isCritical ? ' with a critical hit!' : ''}`, damageText);
+    player.hp -= effectiveDamage;
+    logMessage(`${enemy.name} attacks ${player.name} for ${effectiveDamage.toFixed(1)} damage${criticalText}`, damageText);
+    
     if (player.hp <= 0) {
         gameOver();
     } else {
         updateStats();
     }
 }
+
 
 function winBattle() {
     logMessage(`<strong>${enemy.name} is defeated!</strong>`);
