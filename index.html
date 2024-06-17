@@ -10,9 +10,6 @@
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             height: 100vh;
             background-color: #740000;
         }
@@ -24,8 +21,47 @@
             width: 100%;
         }
         main {
-            text-align: center;
+            display: flex;
+            flex: 1;
+            justify-content: space-around;
+            align-items: center;
             padding: 2rem;
+            text-align: center;
+        }
+        .left, .right {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 10px;
+        }
+        .right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .game-info {
+            margin-bottom: 20px;
+        }
+        .game-log {
+            height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            width: 100%;
+        }
+        .buttons button, .restart-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .restart-btn {
+            display: none;
         }
         footer {
             background-color: #333;
@@ -36,29 +72,6 @@
             position: absolute;
             bottom: 0;
         }
-        .game, .livegame {
-            margin-top: 20px;
-        }
-        canvas {
-            background-color: #000;
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        .buttons button, .restart-btn {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-        .restart-btn {
-            display: none;
-        }
-        .livegame {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
     </style>
 </head>
 <body>
@@ -66,21 +79,25 @@
         <h1>Hello There</h1>
     </header>
     <main>
-        <p>This is a basic page hosted via Git for my own personal learning</p>
-        <div class="game">
-            <h2>Rock, Paper, Scissors</h2>
-            <div class="buttons">
-                <button onclick="playGame('rock')">Rock</button>
-                <button onclick="playGame('paper')">Paper</button>
-                <button onclick="playGame('scissors')">Scissors</button>
-            </div>
-            <div class="result" id="rpsResult"></div>
-        </div>
-        <div class="livegame">
+        <div class="left">
             <h2>Snake Game</h2>
             <canvas id="gameCanvas" width="400" height="400"></canvas>
             <div class="result" id="snakeResult"></div>
             <button class="restart-btn" id="restartBtn" onclick="restartGame()">Restart Game</button>
+        </div>
+        <div class="right">
+            <h2>Text-Based Battle Game</h2>
+            <div class="game-info">
+                <p id="player-stats"></p>
+                <p id="enemy-stats"></p>
+            </div>
+            <div class="game-log" id="game-log"></div>
+            <div class="input-field">
+                <input type="text" id="player-input" placeholder="Type your action...">
+                <button class="buttons" onclick="handleAction()">Submit</button>
+            </div>
+            <button class="buttons" onclick="startGame()">Start Game</button>
+            <button class="buttons" onclick="shop()">Visit Shop</button>
         </div>
     </main>
     <footer>
@@ -88,27 +105,7 @@
     </footer>
 
     <script>
-        function playGame(playerChoice) {
-            const choices = ['rock', 'paper', 'scissors'];
-            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
-            let result = '';
-
-            if (playerChoice === computerChoice) {
-                result = `It's a draw! You both chose ${playerChoice}.`;
-            } else if (
-                (playerChoice === 'rock' && computerChoice === 'scissors') ||
-                (playerChoice === 'paper' && computerChoice === 'rock') ||
-                (playerChoice === 'scissors' && computerChoice === 'paper')
-            ) {
-                result = `You win! ${playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1)} beats ${computerChoice}.`;
-            } else {
-                result = `You lose! ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)} beats ${playerChoice}.`;
-            }
-
-            document.getElementById('rpsResult').innerText = result;
-        }
-    </script>
-    <script>
+        // Snake Game Script
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -212,6 +209,163 @@
         }
 
         initGame();
+
+        // Text-Based Battle Game Script
+        let player = {
+            name: "Player",
+            level: 1,
+            hp: 100,
+            attack: 10,
+            defense: 5,
+            experience: 0,
+            gold: 50,
+            inventory: []
+        };
+
+        let enemy = null;
+        const gameLog = document.getElementById('game-log');
+
+        function startGame() {
+            gameLog.innerHTML = "";
+            player.hp = 100;
+            player.experience = 0;
+            player.level = 1;
+            player.attack = 10;
+            player.defense = 5;
+            player.gold = 50;
+            updateStats();
+            logMessage("Game started! Explore and fight enemies.");
+            generateEnemy();
+        }
+
+        function generateEnemy() {
+            let level = Math.floor(Math.random() * player.level) + 1;
+            enemy = {
+                name: `Enemy ${level}`,
+                level: level,
+                hp: 50 + level * 10,
+                attack: 5 + level * 2,
+                defense: 2 + level
+            };
+            logMessage(`A wild ${enemy.name} appeared!`);
+            updateEnemyStats();
+        }
+
+        function attackEnemy(attackType) {
+            let damage = 0;
+            if (attackType === 'punch') {
+                damage = Math.floor(Math.random() * player.attack) + 5;
+            } else if (attackType === 'kick') {
+                damage = Math.floor(Math.random() * (player.attack + 5)) + 7;
+            } else if (attackType === 'slap') {
+                damage = Math.floor(Math.random() * (player.attack - 2)) + 3;
+            }
+
+            let effectiveDamage = Math.max(0, damage - enemy.defense);
+            enemy.hp -= effectiveDamage;
+            logMessage(`${player.name} ${attackType}s ${enemy.name} for ${effectiveDamage} damage!`);
+            if (enemy.hp <= 0) {
+                winBattle();
+                return;
+            }
+            enemyAttack();
+        }
+
+        function enemyAttack() {let damage = Math.floor(Math.random() * enemy.attack) + 2;
+            let effectiveDamage = Math.max(0, damage - player.defense);
+            player.hp -= effectiveDamage;
+            logMessage(`${enemy.name} attacks ${player.name} for ${effectiveDamage} damage!`);
+            if (player.hp <= 0) {
+                gameOver();
+            } else {
+                updateStats();
+            }
+        }
+
+        function winBattle() {
+            logMessage(`${enemy.name} is defeated!`);
+            player.experience += enemy.level * 5;
+            player.gold += enemy.level * 10;
+            if (player.experience >= player.level * 10) {
+                levelUp();
+            }
+            generateEnemy();
+        }
+
+        function levelUp() {
+            player.level++;
+            player.hp += 20;
+            player.attack += 5;
+            player.defense += 2;
+            player.experience = 0;
+            logMessage(`${player.name} leveled up! Level: ${player.level}, HP: ${player.hp}, Attack: ${player.attack}, Defense: ${player.defense}`);
+        }
+
+        function shop() {
+            let choice = prompt("Welcome to the shop!\n1. Heal (10 gold)\n2. Attack Upgrade (20 gold)\n3. Defense Upgrade (20 gold)\n4. Exit Shop\nChoose an option:");
+            switch(choice) {
+                case '1':
+                    buyItem('heal');
+                    break;
+                case '2':
+                    buyItem('attack_up');
+                    break;
+                case '3':
+                    buyItem('defense_up');
+                    break;
+                default:
+                    logMessage("You left the shop.");
+            }
+        }
+
+        function buyItem(item) {
+            if (item === 'heal' && player.gold >= 10) {
+                player.hp += 30;
+                player.gold -= 10;
+                logMessage(`${player.name} buys a heal. HP: ${player.hp}`);
+            } else if (item === 'attack_up' && player.gold >= 20) {
+                player.attack += 5;
+                player.gold -= 20;
+                logMessage(`${player.name} buys an attack upgrade. Attack: ${player.attack}`);
+            } else if (item === 'defense_up' && player.gold >= 20) {
+                player.defense += 5;
+                player.gold -= 20;
+                logMessage(`${player.name} buys a defense upgrade. Defense: ${player.defense}`);
+            } else {
+                logMessage("Not enough gold or invalid option.");
+            }
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('player-stats').innerText = `Player - Level: ${player.level}, HP: ${player.hp}, Attack: ${player.attack}, Defense: ${player.defense}, Gold: ${player.gold}`;
+        }
+
+        function updateEnemyStats() {
+            document.getElementById('enemy-stats').innerText = `Enemy - Level: ${enemy.level}, HP: ${enemy.hp}, Attack: ${enemy.attack}, Defense: ${enemy.defense}`;
+        }
+
+        function logMessage(message) {
+            gameLog.innerHTML += `<p>${message}</p>`;
+            gameLog.scrollTop = gameLog.scrollHeight;
+        }
+
+        function handleAction() {
+            let input = document.getElementById('player-input').value.toLowerCase();
+            if (input === 'punch' || input === 'kick' || input === 'slap') {
+                attackEnemy(input);
+            } else {
+                logMessage("Invalid action. Choose punch, kick, or slap.");
+            }
+            document.getElementById('player-input').value = '';
+        }
+
+        function gameOver() {
+            logMessage(`${player.name} is defeated! Game Over.`);
+            player.hp = 0;
+            updateStats();
+        }
     </script>
 </body>
 </html>
+
