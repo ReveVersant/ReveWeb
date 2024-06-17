@@ -54,6 +54,11 @@
         .restart-btn {
             display: none;
         }
+        .livegame {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -128,6 +133,13 @@
         }
 
         document.addEventListener('keydown', changeDirection);
+        document.addEventListener('keydown', preventScroll);
+
+        function preventScroll(event) {
+            if (event.keyCode >= 37 && event.keyCode <= 40) {
+                event.preventDefault();
+            }
+        }
 
         function changeDirection(event) {
             if (event.keyCode == 37 && direction != 'RIGHT') direction = 'LEFT';
