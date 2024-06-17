@@ -1,4 +1,4 @@
- <script>
+
         // Snake Game Script
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -325,10 +325,3 @@ function gameOver() {
             generateEnemy();
         }
 
-
-
-// Event listeners for buttons
-//document.querySelector('.start-game-button').addEventListener('click', startGame);
-//document.querySelector('.shop-button').addEventListener('click', shop);
-
-    </script>
