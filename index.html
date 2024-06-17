@@ -36,6 +36,24 @@
             position: absolute;
             bottom: 0;
         }
+        .game, .livegame {
+            margin-top: 20px;
+        }
+        canvas {
+            background-color: #000;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .buttons button, .restart-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .restart-btn {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -44,27 +62,27 @@
     </header>
     <main>
         <p>This is a basic page hosted via Git for my own personal learning</p>
-          <div class="game">
+        <div class="game">
             <h2>Rock, Paper, Scissors</h2>
             <div class="buttons">
                 <button onclick="playGame('rock')">Rock</button>
                 <button onclick="playGame('paper')">Paper</button>
                 <button onclick="playGame('scissors')">Scissors</button>
             </div>
-            <div class="result" id="result"></div>
+            <div class="result" id="rpsResult"></div>
         </div>
-          <div class="livegame">
+        <div class="livegame">
             <h2>Snake Game</h2>
             <canvas id="gameCanvas" width="400" height="400"></canvas>
-            <div class="result" id="result"></div>
+            <div class="result" id="snakeResult"></div>
+            <button class="restart-btn" id="restartBtn" onclick="restartGame()">Restart Game</button>
         </div>
-    </main>
     </main>
     <footer>
         <p>&copy; 2024 Reve</p>
     </footer>
 
-      <script>
+    <script>
         function playGame(playerChoice) {
             const choices = ['rock', 'paper', 'scissors'];
             const computerChoice = choices[Math.floor(Math.random() * choices.length)];
@@ -82,7 +100,7 @@
                 result = `You lose! ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)} beats ${playerChoice}.`;
             }
 
-            document.getElementById('result').innerText = result;
+            document.getElementById('rpsResult').innerText = result;
         }
     </script>
     <script>
@@ -90,13 +108,24 @@
         const ctx = canvas.getContext('2d');
 
         const box = 20;
-        let snake = [{ x: 9 * box, y: 10 * box }];
-        let food = {
-            x: Math.floor(Math.random() * 19 + 1) * box,
-            y: Math.floor(Math.random() * 19 + 1) * box,
-        };
-        let score = 0;
-        let direction = null;
+        let snake;
+        let food;
+        let score;
+        let direction;
+        let game;
+
+        function initGame() {
+            snake = [{ x: 9 * box, y: 10 * box }];
+            food = {
+                x: Math.floor(Math.random() * 19 + 1) * box,
+                y: Math.floor(Math.random() * 19 + 1) * box,
+            };
+            score = 0;
+            direction = null;
+            document.getElementById('snakeResult').innerText = '';
+            document.getElementById('restartBtn').style.display = 'none';
+            game = setInterval(drawGame, 100);
+        }
 
         document.addEventListener('keydown', changeDirection);
 
@@ -149,7 +178,8 @@
                 collision(newHead, snake)
             ) {
                 clearInterval(game);
-                document.getElementById('result').innerText = `Game Over! Your score is ${score}.`;
+                document.getElementById('snakeResult').innerText = `Game Over! Your score is ${score}.`;
+                document.getElementById('restartBtn').style.display = 'block';
             }
 
             snake.unshift(newHead);
@@ -164,7 +194,12 @@
             return false;
         }
 
-        let game = setInterval(drawGame, 100);
+        function restartGame() {
+            clearInterval(game);
+            initGame();
+        }
+
+        initGame();
     </script>
 </body>
 </html>
