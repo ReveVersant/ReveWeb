@@ -279,6 +279,9 @@ function attackEnemy(attackType) {
     let effectiveDamage = calculateDamage(baseDamage, enemy.defense, isCritical);
     enemy.hp -= effectiveDamage;
     logMessage(`${player.name} ${attackType}s ${enemy.name} for ${effectiveDamage.toFixed(1)} damage${isCritical ? ' with a critical hit!' : ''}`);
+    
+    updateEnemyStats();  // Ensure enemy stats are updated
+
     if (enemy.hp <= 0) {
         winBattle();
         return;
@@ -326,62 +329,65 @@ function shop() {
             break;
         case '2':
             buyItem('attack_up');
-                    break;
-                case '3':
-                    buyItem('defense_up');
-                    break;
-                default:
-                    logMessage("You left the shop.");
-            }
-        }
+            break;
+        case '3':
+            buyItem('defense_up');
+            break;
+        default:
+            logMessage("You left the shop.");
+    }
+}
 
-        function buyItem(item) {
-            if (item === 'heal' && player.gold >= 10) {
-                player.hp += 30;
-                player.gold -= 10;
-                logMessage(`${player.name} buys a heal. HP: ${player.hp}`);
-            } else if (item === 'attack_up' && player.gold >= 20) {
-                player.attack += 5;
-                player.gold -= 20;
-                logMessage(`${player.name} buys an attack upgrade. Attack: ${player.attack}`);
-            } else if (item === 'defense_up' && player.gold >= 20) {
-                player.defense += 5;
-                player.gold -= 20;
-                logMessage(`${player.name} buys a defense upgrade. Defense: ${player.defense}`);
-            } else {
-                logMessage("Not enough gold or invalid option.");
-            }
-            updateStats();
-        }
+function buyItem(item) {
+    if (item === 'heal' && player.gold >= 10) {
+        player.hp += 30;
+        player.gold -= 10;
+        logMessage(`${player.name} buys a heal. HP: ${player.hp}`);
+    } else if (item === 'attack_up' && player.gold >= 20) {
+        player.attack += 5;
+        player.gold -= 20;
+        logMessage(`${player.name} buys an attack upgrade. Attack: ${player.attack}`);
+    } else if (item === 'defense_up' && player.gold >= 20) {
+        player.defense += 5;
+        player.gold -= 20;
+        logMessage(`${player.name} buys a defense upgrade. Defense: ${player.defense}`);
+    } else {
+        logMessage("Not enough gold or invalid option.");
+    }
+    updateStats();
+}
 
-        function updateStats() {
-            document.getElementById('player-stats').innerText = `Player - Level: ${player.level}, HP: ${player.hp}, Attack: ${player.attack}, Defense: ${player.defense}, Gold: ${player.gold}`;
-        }
+function updateStats() {
+    document.getElementById('player-stats').innerText = `Player - Level: ${player.level}, HP: ${player.hp}, Attack: ${player.attack}, Defense: ${player.defense}, Gold: ${player.gold}`;
+}
 
-        function updateEnemyStats() {
-            document.getElementById('enemy-stats').innerText = `Enemy - Level: ${enemy.level}, HP: ${enemy.hp}, Attack: ${enemy.attack}, Defense: ${enemy.defense}`;
-        }
+function updateEnemyStats() {
+    if (enemy) {
+        document.getElementById('enemy-stats').innerText = `Enemy - Name: ${enemy.name}, Level: ${enemy.level}, HP: ${enemy.hp.toFixed(1)}, Attack: ${enemy.attack}, Defense: ${enemy.defense}`;
+    }
+}
 
-        function logMessage(message) {
-            gameLog.innerHTML += `<p>${message}</p>`;
-            gameLog.scrollTop = gameLog.scrollHeight;
-        }
+function logMessage(message) {
+    gameLog.innerHTML += `<p>${message}</p>`;
+    gameLog.scrollTop = gameLog.scrollHeight;
+}
 
-        function handleAction() {
-            let input = document.getElementById('player-input').value.toLowerCase();
-            if (input === 'punch' || input === 'kick' || input === 'slap') {
-                attackEnemy(input);
-            } else {
-                logMessage("Invalid action. Choose punch, kick, or slap.");
-            }
-            document.getElementById('player-input').value = '';
-        }
+function handleAction() {
+    let input = document.getElementById('player-input').value.toLowerCase();
+    if (input === 'punch' || input === 'kick' || input === 'slap') {
+        attackEnemy(input);
+    } else {
+        logMessage("Invalid action. Choose punch, kick, or slap.");
+    }
+    document.getElementById('player-input').value = '';
+}
 
-        function gameOver() {
-            logMessage(`${player.name} is defeated! Game Over.`);
-            player.hp = 0;
-            updateStats();
-        }
+function gameOver() {
+    logMessage(`${player.name} is defeated! Game Over.`);
+    player.hp = 0;
+    updateStats();
+}
+
     </script>
 </body>
 </html>
