@@ -232,6 +232,12 @@ const bossNames = ['Boss Skeleton', 'Boss Bat', 'Boss Orc', 'Boss Bandit'];
 
 function startGame() {
     gameLog.innerHTML = "";
+    let playerName = prompt("Enter your character's name:");
+    if (!playerName) {
+        playerName = "Hero"; // Default name if no input is provided
+    }
+    player.name = playerName;  // Update the player's name
+
     player.hp = 100;
     player.experience = 0;
     player.level = 1;
@@ -239,7 +245,7 @@ function startGame() {
     player.defense = 5;
     player.gold = 50;
     updateStats();
-    logMessage("Game started! Explore and fight enemies.");
+    logMessage(`Welcome, ${player.name}! Explore and fight enemies.`);
     generateEnemy();
 }
 
@@ -387,6 +393,7 @@ function gameOver() {
     player.hp = 0;
     updateStats();
 }
+
 
     </script>
 </body>
