@@ -445,11 +445,11 @@
                 player.gold -= 50;
                 logMessage(`${player.name} buys a heal. HP: ${player.hp}`);
             } else if (item === 'attack_up' && player.gold >= 100) {
-                player.attack += 5;
+                player.attack += 4;
                 player.gold -= 100;
                 logMessage(`${player.name} buys an attack upgrade. Attack: ${player.attack}`);
             } else if (item === 'defense_up' && player.gold >= 100) {
-                player.defense += 5;
+                player.defense += 1;
                 player.gold -= 100;
                 logMessage(`${player.name} buys a defense upgrade. Defense: ${player.defense}`);
             } else {
