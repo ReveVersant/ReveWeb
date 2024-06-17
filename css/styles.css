@@ -1,0 +1,173 @@
+    <style>
+        /* Basic Reset */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #740000;
+        }
+
+        header {
+            background-color: #000000;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        header img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .left, .right {
+            flex: 1 1 100%;
+            padding: 20px;
+            background-color: #CCC;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            margin: 10px;
+            max-width: 500px;
+        }
+
+        .right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+/* General styling for game info */
+.game-info {
+    margin-bottom: 20px;
+}
+
+/* Styling for the game log */
+.game-log {
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    transition: opacity 0.5s ease;
+    font-family: 'Arial', sans-serif;
+}
+
+.game-log .old-entry {
+    opacity: 0.6;
+    transition: opacity 1s ease-out;
+}
+
+.game-log .new-entry {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+/* Styling for log messages */
+.game-log p {
+    margin: 5px 0;
+}
+
+.damage-info {
+    font-size: 0.9em;
+    color: #ff5733;  /* Damage text color */
+    font-style: italic;
+}
+
+/* Player and enemy stats */
+#player-stats, #enemy-stats {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #eef0f1;
+}
+
+#player-stats {
+    background-color: #e0f7fa;
+}
+
+#enemy-stats {
+    background-color: #f1e1f5;
+}
+
+
+        .buttons button, .restart-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .restart-btn {
+            display: none;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header, .left, .right {
+                padding: 10px;
+            }
+
+            .game-log {
+                height: 150px;
+            }
+
+            .buttons button {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .left, .right {
+                flex: 1 1 100%;
+            }
+        }
+
+      .title-effect {
+    font-size: 24px;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to right, #190c09, #5fe0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    animation: text-glow 3s ease-in-out infinite;
+}
+
+@keyframes text-glow {
+    0% { text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+    100% { text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); }
+}
+    </style>
