@@ -111,6 +111,18 @@
                 flex: 1 1 100%;
             }
         }
+        .title-effect {
+    font-size: 24px;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
     </style>
 </head>
 <body>
@@ -123,13 +135,13 @@
     </header>
     <main>
         <div class="left">
-            <h2>Snake Game</h2>
+            <h2 class="title-effect">Snake Game</h2>
             <canvas id="gameCanvas" width="400" height="400"></canvas>
             <div class="result" id="snakeResult"></div>
             <button class="restart-btn" id="restartBtn" onclick="restartGame()">Restart Game</button>
         </div>
         <div class="right">
-            <h2>TEXT Quest - GOTY 2024 Edition</h2>
+            <h2 class="title-effect">TEXT Quest - GOTY 2024 Edition</h2>
             <div class="game-info">
                 <p id="player-stats"></p>
                 <p id="enemy-stats"></p>
