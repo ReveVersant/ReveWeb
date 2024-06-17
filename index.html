@@ -123,18 +123,25 @@
             }
         }
 
-        .title-effect {
-            font-size: 24px;
-            color: #fff;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: white;
-            padding: 10px;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-        }
+      .title-effect {
+    font-size: 24px;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: white;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    animation: text-glow 1s ease-in-out infinite;
+}
+
+@keyframes text-glow {
+    0% { text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+    100% { text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); }
+}
     </style>
 </head>
 <body>
