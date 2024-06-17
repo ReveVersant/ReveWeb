@@ -60,16 +60,27 @@
             margin-bottom: 20px;
         }
 
-        .game-log {
-            height: 200px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            width: 100%;
-        }
+         .game-log {
+        height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        width: 100%;
+        transition: opacity 0.5s ease;
+    }
+
+    .game-log .old-entry {
+        opacity: 0.6;
+        transition: opacity 1s ease-out;
+    }
+
+    .game-log .new-entry {
+        opacity: 1;
+        transition: opacity 0.5s ease-in;
+    }
 
         .buttons button, .restart-btn {
             margin: 10px;
@@ -371,15 +382,29 @@
             }
         }
 
-        function winBattle() {
-            logMessage(`${enemy.name} is defeated!`);
-            player.experience += enemy.level * 5;
-            player.gold += enemy.level * 10;
-            if (player.experience >= player.level * 10) {
-                levelUp();
-            }
-            generateEnemy();
-        }
+       function winBattle() {
+    logMessage(`<strong>${enemy.name} is defeated!</strong>`);
+    let baseXP = enemy.level * 5;
+    let baseGold = enemy.level * 10;
+
+    // XP bonus for defeating higher-level enemies
+    if (enemy.level > player.level) {
+        let levelDifference = enemy.level - player.level;
+        let extraXP = levelDifference * 2; // Example scaling, adjust as needed
+        baseXP += extraXP;
+        baseGold += levelDifference * 5; // Example gold scaling, adjust as needed
+    }
+
+    player.experience += baseXP;
+    player.gold += baseGold;
+    logMessage(`<strong>${player.name} gains <span style="color: #FFD700;">${baseXP}</span> XP and <span style="color: #FFD700;">${baseGold}</span> gold.</strong>`);
+
+    if (player.experience >= player.level * 10) {
+        levelUp();
+    }
+    generateEnemy();
+}
+
 
         function levelUp() {
             player.level++;
@@ -436,10 +461,22 @@
             }
         }
 
-        function logMessage(message) {
-            gameLog.innerHTML += `<p>${message}</p>`;
-            gameLog.scrollTop = gameLog.scrollHeight;
-        }
+      function logMessage(message) {
+    const logEntry = document.createElement('p');
+    logEntry.innerHTML = message;
+    logEntry.classList.add('new-entry');
+    gameLog.appendChild(logEntry);
+
+    // Keep only the latest 10 messages
+    while (gameLog.children.length > 10) {
+        const firstChild = gameLog.firstChild;
+        firstChild.classList.add('old-entry');
+        gameLog.removeChild(firstChild);
+    }
+
+    gameLog.scrollTop = gameLog.scrollHeight;
+}
+
 
         function gameOver() {
             logMessage(`${player.name} is defeated! Game Over.`);
